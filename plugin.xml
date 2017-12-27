@@ -90,34 +90,34 @@
         </config-file>
 
 
-        <header-file src="ios/Weexplugin/Weexplugin/Plugins/weex-plugin-amap/WXMapViewComponent.h"/>
-        <source-file src="ios/Weexplugin/Weexplugin/Plugins/weex-plugin-amap/WXMapViewComponent.m"/>
+        <header-file src="ios/WXMapViewComponent.h"/>
+        <source-file src="ios/WXMapViewComponent.m"/>
         <header-file
-            src="ios/Weexplugin/Weexplugin/Plugins/weex-plugin-amap/WXMapViewMarkerComponent.h"/>
+            src="ios/WXMapViewMarkerComponent.h"/>
         <source-file
-            src="ios/Weexplugin/Weexplugin/Plugins/weex-plugin-amap/WXMapViewMarkerComponent.m"/>
-        <header-file src="ios/Weexplugin/Weexplugin/Plugins/weex-plugin-amap/WXMapViewModule.h"/>
-        <source-file src="ios/Weexplugin/Weexplugin/Plugins/weex-plugin-amap/WXMapViewModule.m"/>
-        <header-file src="ios/Weexplugin/Weexplugin/Plugins/weex-plugin-amap/NSArray+WXMap.h"/>
-        <source-file src="ios/Weexplugin/Weexplugin/Plugins/weex-plugin-amap/NSArray+WXMap.m"/>
-        <header-file src="ios/Weexplugin/Weexplugin/Plugins/weex-plugin-amap/NSDictionary+WXMap.h"/>
-        <source-file src="ios/Weexplugin/Weexplugin/Plugins/weex-plugin-amap/NSDictionary+WXMap.m"/>
-        <header-file src="ios/Weexplugin/Weexplugin/Plugins/weex-plugin-amap/NSString+WXMap.h"/>
-        <source-file src="ios/Weexplugin/Weexplugin/Plugins/weex-plugin-amap/NSString+WXMap.m"/>
-        <header-file src="ios/Weexplugin/Weexplugin/Plugins/weex-plugin-amap/WXConvert+AMapKit.h"/>
-        <source-file src="ios/Weexplugin/Weexplugin/Plugins/weex-plugin-amap/WXConvert+AMapKit.m"/>
-        <header-file src="ios/Weexplugin/Weexplugin/Plugins/weex-plugin-amap/WXMapCircleComponent.h"/>
-        <source-file src="ios/Weexplugin/Weexplugin/Plugins/weex-plugin-amap/WXMapCircleComponent.m"/>
-        <header-file src="ios/Weexplugin/Weexplugin/Plugins/weex-plugin-amap/WXMapInfoWindow.h"/>
-        <source-file src="ios/Weexplugin/Weexplugin/Plugins/weex-plugin-amap/WXMapInfoWindow.m"/>
-        <header-file src="ios/Weexplugin/Weexplugin/Plugins/weex-plugin-amap/WXMapInfoWindowComponent.h"/>
-        <source-file src="ios/Weexplugin/Weexplugin/Plugins/weex-plugin-amap/WXMapInfoWindowComponent.m"/>
-        <header-file src="ios/Weexplugin/Weexplugin/Plugins/weex-plugin-amap/WXMapPolygonComponent.h"/>
-        <source-file src="ios/Weexplugin/Weexplugin/Plugins/weex-plugin-amap/WXMapPolygonComponent.m"/>
-        <header-file src="ios/Weexplugin/Weexplugin/Plugins/weex-plugin-amap/WXMapPolylineComponent.h"/>
-        <source-file src="ios/Weexplugin/Weexplugin/Plugins/weex-plugin-amap/WXMapPolylineComponent.m"/>
-        <header-file src="ios/Weexplugin/Weexplugin/Plugins/weex-plugin-amap/WXMapRenderer.h"/>
-        <source-file src="ios/Weexplugin/Weexplugin/Plugins/weex-plugin-amap/WXMapRenderer.m"/>
+            src="ios/WXMapViewMarkerComponent.m"/>
+        <header-file src="ios/WXMapViewModule.h"/>
+        <source-file src="ios/WXMapViewModule.m"/>
+        <header-file src="ios/NSArray+WXMap.h"/>
+        <source-file src="ios/NSArray+WXMap.m"/>
+        <header-file src="ios/NSDictionary+WXMap.h"/>
+        <source-file src="ios/NSDictionary+WXMap.m"/>
+        <header-file src="ios/NSString+WXMap.h"/>
+        <source-file src="ios/NSString+WXMap.m"/>
+        <header-file src="ios/WXConvert+AMapKit.h"/>
+        <source-file src="ios/WXConvert+AMapKit.m"/>
+        <header-file src="ios/WXMapCircleComponent.h"/>
+        <source-file src="ios/WXMapCircleComponent.m"/>
+        <header-file src="ios/WXMapInfoWindow.h"/>
+        <source-file src="ios/WXMapInfoWindow.m"/>
+        <header-file src="ios/WXMapInfoWindowComponent.h"/>
+        <source-file src="ios/WXMapInfoWindowComponent.m"/>
+        <header-file src="ios/WXMapPolygonComponent.h"/>
+        <source-file src="ios/WXMapPolygonComponent.m"/>
+        <header-file src="ios/WXMapPolylineComponent.h"/>
+        <source-file src="ios/WXMapPolylineComponent.m"/>
+        <header-file src="ios/WXMapRenderer.h"/>
+        <source-file src="ios/WXMapRenderer.m"/>
 
         <framework src="ImageIO.framework" weak="true"/>
         <framework src="CoreLocation.framework"/>
