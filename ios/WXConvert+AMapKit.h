@@ -16,5 +16,5 @@
 + (CGPoint)sizeToWXPixelType:(id)json withInstance:(WXSDKInstance *)instance;
 + (CGSize)offsetToContainRect:(CGRect)innerRect inRect:(CGRect)outerRect;
 + (BOOL)isValidatedArray:(id)json;
-
++ (UIColor *)UIColor:(id)value withOpacity:(id)opacity;
 @end

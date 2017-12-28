@@ -20,12 +20,12 @@
 
 <plugin id="weex-amap"
         version="0.0.1"
-        xmlns="http://apache.org/weexpack/ns/plugins/1.0">
+        xmlns="https://github.com/1207241271/weex-xc-amap">
     <name>weex-xc-amap</name>
     <description>weex mapview component</description>
     <license>Apache 2.0</license>
     <keywords>weex,map</keywords>
-    <repo>https://github.com/weex-plugins/weex-plugin-amap</repo>
+    <repo>https://github.com/1207241271/weex-xc-amap</repo>
     <issue>https://github.com/weex-plugins/weex-plugin-amap/issues</issue>
     <dependency id="weex-adapter-image" version="^1.0.0"/>
 
@@ -118,6 +118,8 @@
         <source-file src="ios/WXMapPolylineComponent.m"/>
         <header-file src="ios/WXMapRenderer.h"/>
         <source-file src="ios/WXMapRenderer.m"/>
+        <header-file src="ios/LocateViewController.h"/>
+        <source-file src="ios/LocateViewController.m"/>
 
         <framework src="ImageIO.framework" weak="true"/>
         <framework src="CoreLocation.framework"/>
@@ -127,6 +129,8 @@
         <framework src="CoreGraphics.framework"/>
         <framework src="AVFoundation.framework"/>
         <framework spec="4.6.1" src="AMap3DMap" type="podspec"/>
+        <framework spec="5.5.0" src="AMapSearch" type="podspec"/>
+        <framework spec="1.4.2" src="AMapLocation" type="podspec"/>
 
         <preference name="CAMERA_USAGE_DESCRIPTION" default=" "/>
         <config-file parent="NSCameraUsageDescription" target="*-Info.plist">

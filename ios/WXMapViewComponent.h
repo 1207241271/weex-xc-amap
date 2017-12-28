@@ -15,7 +15,7 @@
 @interface WXMapViewComponent : WXComponent<MAMapViewDelegate>
 
 - (NSDictionary *)getUserLocation;
-
+- (NSDictionary *)getCenterLocation;
 
 #pragma - Marker
 - (void)addMarker:(WXMapViewMarkerComponent *)marker;

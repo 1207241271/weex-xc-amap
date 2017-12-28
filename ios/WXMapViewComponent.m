@@ -486,7 +486,7 @@ static const void *componentKey = &componentKey;
         NSMutableDictionary *dictionary = [NSMutableDictionary new];
         [dictionary setObject:@(mapView.zoomLevel) forKey:@"zoom"];
         [dictionary setObject:@[@(mapView.centerCoordinate.longitude),@(mapView.centerCoordinate.latitude)] forKey:@"targetCoordinate"];
-        [self fireEvent:@"zoom" params: dictionary];
+        [self fireEvent:@"zoomchange" params:dictionary];
     }
 }
 
@@ -520,9 +520,9 @@ static const void *componentKey = &componentKey;
         MAPolygon *polygon = (MAPolygon *)overlay;
         WXMapPolygonComponent *component = (WXMapPolygonComponent *)polygon.component;
         MAPolygonRenderer *polygonRenderer = [[MAPolygonRenderer alloc] initWithPolygon:overlay];
-        polygonRenderer.lineWidth   = component.strokeWidth;;
+        polygonRenderer.lineWidth   = component.strokeWidth;
         polygonRenderer.strokeColor = [WXConvert UIColor:component.strokeColor];
-        polygonRenderer.fillColor   = [WXConvert UIColor:component.fillColor];
+        polygonRenderer.fillColor   = [WXConvert UIColor:component.fillColor withOpacity:component.fillOpacity];
         polygonRenderer.lineDash = [WXConvert isLineDash:component.strokeStyle];
         return polygonRenderer;
     }else if ([overlay isKindOfClass:[MACircle class]])
@@ -532,7 +532,8 @@ static const void *componentKey = &componentKey;
         MACircleRenderer *circleRenderer = [[MACircleRenderer alloc] initWithCircle:overlay];
         circleRenderer.lineWidth   = component.strokeWidth;
         circleRenderer.strokeColor = [WXConvert UIColor:component.strokeColor];
-        circleRenderer.fillColor   = [WXConvert UIColor:component.fillColor];
+        circleRenderer.fillColor   = [WXConvert UIColor:component.fillColor withOpacity:component.fillOpacity];
+        circleRenderer.lineDash = [WXConvert isLineDash:component.strokeStyle];
         return circleRenderer;
     }
     

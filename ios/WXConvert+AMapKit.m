@@ -65,4 +65,9 @@ WX_JSON_CONVERTER(NSDictionary)
     return NO;
 }
 
++ (UIColor *)UIColor:(id)value withOpacity:(id)opacity{
+    UIColor *color = [WXConvert UIColor:value];
+    const CGFloat *components = CGColorGetComponents(color.CGColor);
+    return [UIColor colorWithRed:components[0] green:components[1] blue:components[2] alpha:[WXConvert CGFloat:opacity]];
+}
 @end

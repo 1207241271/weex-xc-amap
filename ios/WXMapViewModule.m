@@ -9,12 +9,14 @@
 #import "WXMapViewModule.h"
 #import "WXMapViewComponent.h"
 #import "WXConvert+AMapKit.h"
-
+#import "LocateViewController.h"
 @implementation WXMapViewModule
 
 @synthesize weexInstance;
 
 WX_EXPORT_METHOD(@selector(getUserLocation:callback:))
+WX_EXPORT_METHOD(@selector(getCenterLocation:callback:))
+WX_EXPORT_METHOD(@selector(choosePosition:))
 WX_EXPORT_METHOD(@selector(getLineDistance:marker:callback:))
 WX_EXPORT_METHOD_SYNC(@selector(polygonContainsMarker:ref:callback:))
 
@@ -29,6 +31,12 @@ WX_EXPORT_METHOD_SYNC(@selector(polygonContainsMarker:ref:callback:))
     [self performBlockWithRef:elemRef block:^(WXComponent *component) {
         callback([(WXMapViewComponent *)component getCenterLocation] ? : nil);
     }];
+}
+-(void)choosePosition:(WXModuleCallback)callback {
+    LocateViewController* locateView = [[LocateViewController alloc] init];
+    locateView.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    locateView.callback = callback;
+    [weexInstance.viewController presentViewController:locateView animated:YES completion:nil];
 }
 
 - (void)getLineDistance:(NSArray *)marker marker:(NSArray *)anotherMarker callback:(WXModuleCallback)callback
