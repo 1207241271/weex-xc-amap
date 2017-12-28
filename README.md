@@ -8,6 +8,16 @@
 
 ### 快速开始
 
+使用方法
+``` bash
+//install
+npm install weex-xc-amap
+weexpack plugin add ./node_modules/weex-xc-amap
+//uninstall
+weexpack plugin remove weex-amap
+```
+
+
 编辑你的weex文件
 
 ``` we
