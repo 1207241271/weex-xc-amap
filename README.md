@@ -213,6 +213,45 @@ export default {
   result: 'success' 
 }
 ```
+##### getCenterLocation(elemRef,completeFunc)
+
++ completeFunc 获取到中心点的回调函数，返回的数据：
+```json
+{
+    data:[lng,lat],
+    result:'success'
+}
+```
+
+##### choosePosition(completeFunc)
+
++ completeFunc 选取完点的回调函数，返回的数据：
+```json
+{
+    data:[lng,lat],
+    result:'success'
+}
+```
+
+##### reGeoPositions(postions,completeFunc)
+
++ completeFunc 批量转换完之后的数据
+```
+{
+    result:'success',
+    data:[{
+        formattedAddress:'湖北省武汉市洪山区关山街道珞瑜东路',
+        addressComponent:{
+            city:'武汉市',
+            country:'中国',
+            township:'关山街道',
+            streetNumber:{
+                street:'珞瑜东路'
+            }
+        }
+    }，···]
+}
+```
 
 #####  getLineDistance(posA, posB, callback)
 
