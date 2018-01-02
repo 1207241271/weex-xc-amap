@@ -123,11 +123,11 @@ weexpack plugin remove weex-amap
 
 #### weex-amap-info-window 属性    
 
-| 属性        | 类型         | 描述  |
-| ------------- |:-------------:| -----:|
-| open     | boolean | 是否显示InfoWindow |
-| position     | String | InfoWindow位置 |
-| offset     | String | InfoWindow偏移量 |
+| 属性        | 类型         | Demo| 描述  |
+| ------------- |:-------------:| ------:|-----:|
+| open     | boolean | true|是否显示InfoWindow |
+| position     | String | [116.487, 40.00003]|InfoWindow位置 |
+| offset     | String |[0,-20]| InfoWindow偏移量[x,y] |
 
 ``` we
 <template>
