@@ -129,6 +129,44 @@ weexpack plugin remove weex-amap
 | position     | String | InfoWindow位置 |
 | offset     | String | InfoWindow偏移量 |
 
+``` we
+<template>
+    <div>
+     <template v-for='item in mapCfg.markers'>
+        <weex-amap-marker :carId="item.carId" :id="item.id" :position="item.position" icon="http://118.89.104.130/adminTest/static/img/avatars/profile.jpg" @click="markerClicker" hide-callout="true">
+        </weex-amap-marker>
+        <weex-amap-info-window :open="true" :position="item.position">
+            <div>
+                <text class="info-window-text">测试</text>
+            </div>
+        </weex-amap-info-window>
+     </template>
+    </div>
+</template>
+
+<style>
+.info-window-text{
+    text-align: center;
+    color: red;
+    background-color: white;
+    width:350px;
+}
+</style>
+
+<script>
+export default {
+
+    methods:{
+        markerClicker(e){
+            console.log(e);
+        }
+    }
+    
+}
+</script>
+
+```
+
 #### weex-amap-circle 属性
 | 属性        | 类型         | 描述  |
 | ------------- |:-------------:| -----:|
