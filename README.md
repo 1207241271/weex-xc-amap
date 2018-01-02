@@ -216,7 +216,7 @@ export default {
 ##### getCenterLocation(elemRef,completeFunc)
 
 + completeFunc 获取到中心点的回调函数，返回的数据：
-```json
+```
 {
     data:[lng,lat],
     result:'success'
@@ -226,7 +226,7 @@ export default {
 ##### choosePosition(completeFunc)
 
 + completeFunc 选取完点的回调函数，返回的数据：
-```json
+```
 {
     data:[lng,lat],
     result:'success'
