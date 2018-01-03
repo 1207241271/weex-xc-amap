@@ -17,4 +17,5 @@
 + (CGSize)offsetToContainRect:(CGRect)innerRect inRect:(CGRect)outerRect;
 + (BOOL)isValidatedArray:(id)json;
 + (UIColor *)UIColor:(id)value withOpacity:(id)opacity;
++ (NSDictionary *)convertAddressComponent:(id)addressComponent;
 @end

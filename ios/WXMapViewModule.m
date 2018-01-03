@@ -10,6 +10,14 @@
 #import "WXMapViewComponent.h"
 #import "WXConvert+AMapKit.h"
 #import "LocateViewController.h"
+#import <AMapSearchKit/AMapSearchKit.h>
+
+@interface WXMapViewModule()<AMapSearchDelegate>
+@property(nonatomic,strong) AMapSearchAPI *search;
+@property(nonatomic,strong) NSMutableArray *reGeoRequestArray;
+@property(nonatomic,strong) NSMutableArray *reGeoResultArray;
+@property(nonatomic,copy)   WXModuleCallback reGeoCallBack;
+@end
 @implementation WXMapViewModule
 
 @synthesize weexInstance;
@@ -18,6 +26,7 @@ WX_EXPORT_METHOD(@selector(getUserLocation:callback:))
 WX_EXPORT_METHOD(@selector(getCenterLocation:callback:))
 WX_EXPORT_METHOD(@selector(choosePosition:))
 WX_EXPORT_METHOD(@selector(getLineDistance:marker:callback:))
+WX_EXPORT_METHOD(@selector(reGeoPositions:callback:))
 WX_EXPORT_METHOD_SYNC(@selector(polygonContainsMarker:ref:callback:))
 
 - (void)getUserLocation:(NSString *)elemRef callback:(WXModuleCallback)callback
@@ -37,6 +46,57 @@ WX_EXPORT_METHOD_SYNC(@selector(polygonContainsMarker:ref:callback:))
     locateView.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     locateView.callback = callback;
     [weexInstance.viewController presentViewController:locateView animated:YES completion:nil];
+}
+-(void)reGeoPositions:(NSArray *)postions callback:(WXModuleCallback)callback{
+    self.reGeoCallBack = callback;
+    if (!self.search) {
+        self.search = [[AMapSearchAPI alloc] init];
+        self.search.delegate = self;
+    }
+    self.reGeoRequestArray = [[NSMutableArray alloc] init];
+    dispatch_queue_t queue = dispatch_queue_create("com.xunce.positions",DISPATCH_QUEUE_CONCURRENT);
+    for (int index = 0; index<postions.count; index++) {
+        AMapReGeocodeSearchRequest *regeo = [[AMapReGeocodeSearchRequest alloc] init];
+        regeo.location = [AMapGeoPoint locationWithLatitude:[postions[index][1] floatValue] longitude:[postions[index][0] floatValue]];
+        [self.reGeoRequestArray addObject:regeo];
+        dispatch_async(queue, ^{
+            [self.search AMapReGoecodeSearch:regeo];
+        });
+    }
+    self.reGeoResultArray = [[NSMutableArray alloc]initWithArray:self.reGeoRequestArray];
+}
+-(void)AMapSearchRequest:(id)request didFailWithError:(NSError *)error{
+    Boolean isFinished = true;
+    for (int index = 0 ; index < self.reGeoRequestArray.count; index++) {
+        if ([self.reGeoResultArray[index] isKindOfClass:[NSDictionary class]]) {
+            continue;
+        }
+        if ([self.reGeoRequestArray[index] isEqual:request]) {
+            [self.reGeoResultArray replaceObjectAtIndex:index withObject:@{@"error":error.description}];
+            continue;
+        }
+        isFinished = false;
+    }
+    if (isFinished && self.reGeoCallBack != nil) {
+        self.reGeoCallBack(self.reGeoResultArray);
+    }
+}
+
+-(void)onReGeocodeSearchDone:(AMapReGeocodeSearchRequest *)request response:(AMapReGeocodeSearchResponse *)response{
+    Boolean isFinished = true;
+    for (int index = 0 ; index < self.reGeoRequestArray.count; index++) {
+        if ([self.reGeoResultArray[index] isKindOfClass:[NSDictionary class]]) {
+            continue;
+        }
+        if ([self.reGeoRequestArray[index] isEqual:request]) {
+            [self.reGeoResultArray replaceObjectAtIndex:index withObject:@{@"formattedAddress":response.regeocode.formattedAddress,@"addressComponent":        [WXConvert convertAddressComponent:response.regeocode.addressComponent]}];
+            continue;
+        }
+        isFinished = false;
+    }
+    if (isFinished && self.reGeoCallBack != nil) {
+        self.reGeoCallBack(self.reGeoResultArray);
+    }
 }
 
 - (void)getLineDistance:(NSArray *)marker marker:(NSArray *)anotherMarker callback:(WXModuleCallback)callback
