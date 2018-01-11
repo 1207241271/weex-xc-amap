@@ -126,8 +126,8 @@
         <framework src="MobileCoreServices.framework"/>
         <framework src="CoreGraphics.framework"/>
         <framework src="AVFoundation.framework"/>
-        <framework spec="4.6.1" src="AMap3DMap" type="podspec"/>
-        <framework spec="5.5.0" src="AMapSearch" type="podspec"/>
+        <framework spec="5.7.0" src="AMap3DMap" type="podspec"/>
+        <framework spec="5.7.0" src="AMapSearch" type="podspec"/>
         <framework spec="1.4.2" src="AMapLocation" type="podspec"/>
 
         <preference name="CAMERA_USAGE_DESCRIPTION" default=" "/>

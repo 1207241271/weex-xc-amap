@@ -83,6 +83,7 @@ weexpack plugin remove weex-amap
 | customEnabled  | boolean | true | 是否开启自定义地图样式
 | setMapCustomEnable  | String | {"android":"/data/custom_map"} |设置自定义地图资源文件的路径
 | indoorswitch  | boolean | false |设置室内地图楼层切换控件是否可见
+| mapStylePath  | String | style.data | 设置地图样式 |
 
 
 **建议你前往[高德开发者社区](http://lbs.amap.com/)申明你对应产品的Key，保证地图正常工作**

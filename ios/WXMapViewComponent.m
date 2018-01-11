@@ -125,6 +125,9 @@ static const void *componentKey = &componentKey;
         _zoomLevel = [[attributes wxmap_safeObjectForKey:@"zoom"] floatValue];
         _showScale = [[attributes wxmap_safeObjectForKey:@"scale"] boolValue];
         _showGeolocation = [[attributes wxmap_safeObjectForKey:@"geolocation"] boolValue];
+        if ([attributes wxmap_safeObjectForKey:@"mapStylePath"]) {
+            [self setMapStyle:attributes[@"mapStylePath"]];
+        }
         if ([attributes wxmap_safeObjectForKey:@"sdkKey"]) {
             [self setAPIKey:[attributes[@"sdkKey"] objectForKey:@"ios"] ? : @""];
         }
@@ -144,6 +147,7 @@ static const void *componentKey = &componentKey;
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
     CGSize windowSize = window.rootViewController.view.frame.size;
     self.mapView = [[MAMapView alloc] initWithFrame:CGRectMake(0, 0, windowSize.width, windowSize.height)];
+    [AMapServices sharedServices].enableHTTPS = YES;
     self.mapView.showsUserLocation = _showGeolocation;
     self.mapView.delegate = self;
     
@@ -169,6 +173,12 @@ static const void *componentKey = &componentKey;
     }
 }
 
+-(void)willRemoveSubview:(WXComponent *)component{
+    if ([component isKindOfClass:[WXMapRenderer class]]) {
+        WXMapRenderer *overlayRenderer = (WXMapRenderer *)component;
+        [self removeOverlay:overlayRenderer];
+    }
+}
 
 - (void)dealloc
 {
@@ -315,6 +325,13 @@ static const void *componentKey = &componentKey;
     [AMapServices sharedServices].apiKey = appKey;
 }
 
+-(void)setMapStyle:(NSString *)filePath{
+//    NSString *path = [NSString stringWithFormat:@"%@/%@",[NSBundle mainBundle].bundlePath,filePath];
+//    NSData *data = [NSData dataWithContentsOfFile:path];
+//    [self.mapView setCustomMapStyleWithWebData:data];
+//    [self.mapView setCustomMapStyleEnabled:true];
+}
+
 - (void)setCenter:(NSArray *)center
 {
     if (!center) {
@@ -373,6 +390,9 @@ static const void *componentKey = &componentKey;
 
 - (MAAnnotationView *)_generateAnnotationView:(MAMapView *)mapView viewForAnnotation:(MAPointAnnotation *)annotation
 {
+    if ([annotation isKindOfClass:[MAUserLocation class]]) {
+        return  nil;
+    }
     WXMapViewMarkerComponent *markerComponent = (WXMapViewMarkerComponent *)annotation.component;
     if (annotation.iconImage){
         static NSString *pointReuseIndetifier = @"customReuseIndetifier";
@@ -513,7 +533,7 @@ static const void *componentKey = &componentKey;
         polylineRenderer.strokeColor = [WXConvert UIColor:component.strokeColor];
         polylineRenderer.lineWidth   = component.strokeWidth;
         polylineRenderer.lineCapType = kCGLineCapButt;
-        polylineRenderer.lineDash = [WXConvert isLineDash:component.strokeStyle];
+        polylineRenderer.lineDashType = [WXConvert isLineDash:component.strokeStyle]?kMALineDashTypeSquare:kMALineDashTypeNone;
         return polylineRenderer;
     }else if ([overlay isKindOfClass:[MAPolygon class]])
     {
@@ -523,7 +543,7 @@ static const void *componentKey = &componentKey;
         polygonRenderer.lineWidth   = component.strokeWidth;
         polygonRenderer.strokeColor = [WXConvert UIColor:component.strokeColor];
         polygonRenderer.fillColor   = [WXConvert UIColor:component.fillColor withOpacity:component.fillOpacity];
-        polygonRenderer.lineDash = [WXConvert isLineDash:component.strokeStyle];
+        polygonRenderer.lineDashType = [WXConvert isLineDash:component.strokeStyle]?kMALineDashTypeSquare:kMALineDashTypeNone;
         return polygonRenderer;
     }else if ([overlay isKindOfClass:[MACircle class]])
     {
@@ -533,7 +553,7 @@ static const void *componentKey = &componentKey;
         circleRenderer.lineWidth   = component.strokeWidth;
         circleRenderer.strokeColor = [WXConvert UIColor:component.strokeColor];
         circleRenderer.fillColor   = [WXConvert UIColor:component.fillColor withOpacity:component.fillOpacity];
-        circleRenderer.lineDash = [WXConvert isLineDash:component.strokeStyle];
+        circleRenderer.lineDashType = [WXConvert isLineDash:component.strokeStyle]?kMALineDashTypeSquare:kMALineDashTypeNone;
         return circleRenderer;
     }
     

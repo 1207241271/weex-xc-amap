@@ -78,7 +78,7 @@ WX_EXPORT_METHOD_SYNC(@selector(polygonContainsMarker:ref:callback:))
         isFinished = false;
     }
     if (isFinished && self.reGeoCallBack != nil) {
-        self.reGeoCallBack(self.reGeoResultArray);
+        self.reGeoCallBack(@{@"result":@"fail",@"data":self.reGeoResultArray});
     }
 }
 
@@ -95,7 +95,7 @@ WX_EXPORT_METHOD_SYNC(@selector(polygonContainsMarker:ref:callback:))
         isFinished = false;
     }
     if (isFinished && self.reGeoCallBack != nil) {
-        self.reGeoCallBack(self.reGeoResultArray);
+        self.reGeoCallBack(@{@"result":@"success",@"data":self.reGeoResultArray});
     }
 }
 
@@ -110,7 +110,7 @@ WX_EXPORT_METHOD_SYNC(@selector(polygonContainsMarker:ref:callback:))
     if (distance > 0) {
         userDic = @{@"result":@"success",@"data":@{@"distance":[NSNumber numberWithDouble:distance]}};
     }else {
-        userDic = @{@"resuldt":@"false",@"data":@""};
+        userDic = @{@"result":@"false",@"data":@""};
     }
     callback(userDic);
 }
