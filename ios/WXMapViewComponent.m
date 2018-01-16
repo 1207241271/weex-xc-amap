@@ -92,6 +92,7 @@ static const void *componentKey = &componentKey;
     NSMutableDictionary *_annotations;
     NSMutableDictionary *_overlays;
     CGFloat _zoomLevel;
+    NSString *_mapStyle;
     BOOL _showScale;
     BOOL _showGeolocation;
     BOOL _zoomChanged;
@@ -126,7 +127,7 @@ static const void *componentKey = &componentKey;
         _showScale = [[attributes wxmap_safeObjectForKey:@"scale"] boolValue];
         _showGeolocation = [[attributes wxmap_safeObjectForKey:@"geolocation"] boolValue];
         if ([attributes wxmap_safeObjectForKey:@"mapStylePath"]) {
-            [self setMapStyle:attributes[@"mapStylePath"]];
+           _mapStyle = attributes[@"mapStylePath"];
         }
         if ([attributes wxmap_safeObjectForKey:@"sdkKey"]) {
             [self setAPIKey:[attributes[@"sdkKey"] objectForKey:@"ios"] ? : @""];
@@ -160,6 +161,7 @@ static const void *componentKey = &componentKey;
     self.mapView.showsScale = _showScale;
     [self.mapView setCenterCoordinate:_centerCoordinate];
     [self.mapView setZoomLevel:_zoomLevel];
+    [self setMapStyle:_mapStyle];
 }
 
 
@@ -326,10 +328,10 @@ static const void *componentKey = &componentKey;
 }
 
 -(void)setMapStyle:(NSString *)filePath{
-//    NSString *path = [NSString stringWithFormat:@"%@/%@",[NSBundle mainBundle].bundlePath,filePath];
-//    NSData *data = [NSData dataWithContentsOfFile:path];
-//    [self.mapView setCustomMapStyleWithWebData:data];
-//    [self.mapView setCustomMapStyleEnabled:true];
+    NSString *path = [NSString stringWithFormat:@"%@/%@",[NSBundle mainBundle].bundlePath,filePath];
+    NSData *data = [NSData dataWithContentsOfFile:path];
+    [self.mapView setCustomMapStyleWithWebData:data];
+    [self.mapView setCustomMapStyleEnabled:true];
 }
 
 - (void)setCenter:(NSArray *)center
@@ -404,16 +406,7 @@ static const void *componentKey = &componentKey;
         
         annotationView.canShowCallout               = !markerComponent.hideCallout;
         annotationView.zIndex = markerComponent.zIndex;
-        [[self imageLoader] downloadImageWithURL:annotation.iconImage imageFrame:CGRectMake(0, 0, 25, 25) userInfo:nil completed:^(UIImage *image, NSError *error, BOOL finished) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (image) {
-                    annotationView.image = image;
-                    
-                }else {
-                    annotationView.image = [UIImage imageNamed:@"greenPin"];
-                }
-            });
-        }];
+        annotationView.image = [UIImage imageNamed:annotation.iconImage];
         return annotationView;
     }else {
         static NSString *pointReuseIndetifier = @"pointReuseIndetifier";
