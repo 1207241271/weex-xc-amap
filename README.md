@@ -117,6 +117,7 @@ weexpack plugin remove weex-amap
 | title | string   |   'this is a marker' | 坐标点的名称 |
 | hideCallout | boolean   |   true | 设置marker是否可点击 |
 | open | boolean   |   true | 是否显示InfoWindow |
+| animate | boolean | true | 是否显示生长动画 |
 
 #### weex-amap-marker 事件
 **click**    
@@ -200,6 +201,8 @@ export default {
 | strokeColor     | String | 描边颜色 |
 | strokeStyle     | String | 描边样式，可为dashed或空 |
 | strokeWidth     | float | 描边宽度 |
+| includes        | boolean | 所有点显示在可是区域内 |
+| texture         | String  | 图片名字，用作纹理绘制 |
 
 #### Amap 模块
 
