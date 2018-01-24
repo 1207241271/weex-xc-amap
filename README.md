@@ -265,7 +265,7 @@ export default {
 
 + 判断点是否在合围范围内
 
-##### includePoints(positions)
+##### includePoints(elemRef,positions)
 + positions: [[lng,lat],[lng,lat],…]
 + 将地图缩放至包括所有点大小
 
