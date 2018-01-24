@@ -17,6 +17,7 @@
 #import "NSArray+WXMap.h"
 #import "NSDictionary+WXMap.h"
 #import "WXConvert+AMapKit.h"
+#import "WXAnimationAnnotationView.h"
 #import <objc/runtime.h>
 
 #define WX_CUSTOM_MARKER @"wx_custom_marker";
@@ -398,15 +399,16 @@ static const void *componentKey = &componentKey;
     WXMapViewMarkerComponent *markerComponent = (WXMapViewMarkerComponent *)annotation.component;
     if (annotation.iconImage){
         static NSString *pointReuseIndetifier = @"customReuseIndetifier";
-        MAAnnotationView *annotationView = (MAAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:pointReuseIndetifier];
+        WXAnimationAnnotationView *annotationView = (WXAnimationAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:pointReuseIndetifier];
         if (annotationView == nil)
         {
-            annotationView = [[MAAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:pointReuseIndetifier];
+            annotationView = [[WXAnimationAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:pointReuseIndetifier];
         }
         
         annotationView.canShowCallout               = !markerComponent.hideCallout;
         annotationView.zIndex = markerComponent.zIndex;
         annotationView.image = [UIImage imageNamed:annotation.iconImage];
+        annotationView.growAnimationAnnotation = markerComponent.animatesDrop;
         return annotationView;
     }else {
         static NSString *pointReuseIndetifier = @"pointReuseIndetifier";
@@ -415,7 +417,6 @@ static const void *componentKey = &componentKey;
         {
             annotationView = [[MAPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:pointReuseIndetifier];
         }
-        
         annotationView.canShowCallout               = !markerComponent.hideCallout;
         annotationView.zIndex = markerComponent.zIndex;
         return annotationView;
@@ -527,6 +528,7 @@ static const void *componentKey = &componentKey;
         polylineRenderer.lineWidth   = component.strokeWidth;
         polylineRenderer.lineCapType = kCGLineCapButt;
         polylineRenderer.lineDashType = [WXConvert isLineDash:component.strokeStyle]?kMALineDashTypeSquare:kMALineDashTypeNone;
+        [polylineRenderer loadTexture:[UIImage imageNamed:component.texture]];
         return polylineRenderer;
     }else if ([overlay isKindOfClass:[MAPolygon class]])
     {

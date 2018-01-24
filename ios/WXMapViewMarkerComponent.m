@@ -48,6 +48,7 @@
         }
         _title = [attributes wxmap_safeObjectForKey:@"title"];
         _icon = [attributes wxmap_safeObjectForKey:@"icon"];
+        _animatesDrop = [[attributes wxmap_safeObjectForKey:@"animate"] boolValue];
     }
     return self;
 }

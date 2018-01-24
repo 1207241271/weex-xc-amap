@@ -9,5 +9,6 @@
 #import "WXMapRenderer.h"
 
 @interface WXMapPolylineComponent : WXMapRenderer
+@property (nonatomic, copy) NSString *texture;
 
 @end

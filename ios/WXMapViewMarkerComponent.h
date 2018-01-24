@@ -19,6 +19,7 @@
 @property (nonatomic, assign) CGPoint offset;
 
 @property (nonatomic, assign) BOOL hideCallout;
+@property (nonatomic, assign) BOOL animatesDrop;
 
 @property (nonatomic, assign) NSInteger zIndex;
 
