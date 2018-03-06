@@ -98,6 +98,7 @@ static const void *componentKey = &componentKey;
     BOOL _showGeolocation;
     BOOL _zoomChanged;
     BOOL _isDragend;
+    BOOL _onMapClick;
 }
 
 - (id<WXImgLoaderProtocol>)imageLoader
@@ -139,13 +140,14 @@ static const void *componentKey = &componentKey;
         if ([events containsObject:@"dragend"]) {
             _isDragend = YES;
         }
+        if ([events containsObject:@"mapclick"]) {
+            _onMapClick = YES;
+        }
     }
-    
     return self;
 }
 
-- (UIView *) loadView
-{
+- (UIView *)loadView{
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
     CGSize windowSize = window.rootViewController.view.frame.size;
     self.mapView = [[MAMapView alloc] initWithFrame:CGRectMake(0, 0, windowSize.width, windowSize.height)];
@@ -156,8 +158,7 @@ static const void *componentKey = &componentKey;
     return self.mapView;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad{
     [super viewDidLoad];
     self.mapView.showsScale = _showScale;
     [self.mapView setCenterCoordinate:_centerCoordinate];
@@ -364,6 +365,44 @@ static const void *componentKey = &componentKey;
     return @{@"result":@"success",@"data":@[@(_mapView.centerCoordinate.longitude),@(_mapView.centerCoordinate.latitude)]};
 }
 
+-(void)includePoints:(NSArray *)array{
+    CLLocationCoordinate2D northEast = CLLocationCoordinate2DMake(0, -90);
+    CLLocationCoordinate2D southWest = CLLocationCoordinate2DMake(180, 90);
+    for (int i = 0; i < array.count; i++) {
+        NSArray *lnglat = [array objectAtIndex:i];
+        CLLocationDegrees lng = [[lnglat objectAtIndex:0] doubleValue];
+        CLLocationDegrees lat = [[lnglat objectAtIndex:1] doubleValue];
+        if (lng > northEast.longitude)northEast.longitude = lng;
+        if (lng < southWest.longitude)southWest.longitude = lng;
+        if (lat > northEast.latitude) northEast.latitude = lat;
+        if (lat < southWest.latitude) northEast.latitude = lat;
+    }
+    MACoordinateSpan span = MACoordinateSpanMake(northEast.latitude-southWest.latitude, northEast.longitude-northEast.longitude);
+    CLLocationCoordinate2D centerCoordinate = CLLocationCoordinate2DMake((northEast.latitude+southWest.latitude)/2, (northEast.longitude+southWest.longitude)/2);
+    MACoordinateRegion region = MACoordinateRegionMake(centerCoordinate, span);
+    [self.mapView setRegion:region];
+}
+
+-(void)addPointAnimation:(NSArray *)array speed:(NSInteger)speed callback:(WXModuleCallback)callback{
+    MAAnimatedAnnotation *annotation = [[MAAnimatedAnnotation alloc] init];
+    if(![array isKindOfClass:[NSArray class]] || array.count==0){
+        callback(@{@"isFinish":@(false)});
+        return;
+    }
+    annotation.coordinate = CLLocationCoordinate2DMake([[[array objectAtIndex:0] objectAtIndex:1] doubleValue], [[[array objectAtIndex:0] objectAtIndex:0] doubleValue]);
+    [self.mapView addAnnotation:annotation];
+    CLLocationCoordinate2D locations[array.count];
+
+    for (int i = 0; i < array.count; i++) {
+        NSArray *lnglat = [array objectAtIndex:i];
+        locations[i].longitude = [[lnglat objectAtIndex:0] doubleValue];
+        locations[i].latitude = [[lnglat objectAtIndex:1] doubleValue];
+    }
+    [annotation addMoveAnimationWithKeyCoordinates:locations count:array.count withDuration:1.0*array.count/speed withName:nil completeCallback:^(BOOL isFinished) {
+        callback(@{@"isFinish":@(true)});
+    }];
+}
+
 #pragma mark - private method
 - (CLLocationCoordinate2D)_coordinate2D:(CLLocationCoordinate2D)position offset:(CGPoint)offset
 {
@@ -464,6 +503,12 @@ static const void *componentKey = &componentKey;
     }
     
     return nil;
+}
+
+-(void)mapView:(MAMapView *)mapView didSingleTappedAtCoordinate:(CLLocationCoordinate2D)coordinate{
+    if (_onMapClick) {
+        [self fireEvent:@"mapclick" params:nil];
+    }
 }
 
 /**

@@ -16,6 +16,8 @@
 
 - (NSDictionary *)getUserLocation;
 - (NSDictionary *)getCenterLocation;
+- (void)includePoints:(NSArray *)array;
+- (void)addPointAnimation:(NSArray *)array speed:(NSInteger)speed callback:(WXModuleCallback)callback;
 
 #pragma - Marker
 - (void)addMarker:(WXMapViewMarkerComponent *)marker;

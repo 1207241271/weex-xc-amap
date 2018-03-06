@@ -27,6 +27,7 @@ WX_EXPORT_METHOD(@selector(getCenterLocation:callback:))
 WX_EXPORT_METHOD(@selector(choosePosition:))
 WX_EXPORT_METHOD(@selector(getLineDistance:marker:callback:))
 WX_EXPORT_METHOD(@selector(reGeoPositions:callback:))
+WX_EXPORT_METHOD(@selector(addMarkerMoveAnimation:points:speed:callback:))
 WX_EXPORT_METHOD_SYNC(@selector(polygonContainsMarker:ref:callback:))
 
 - (void)getUserLocation:(NSString *)elemRef callback:(WXModuleCallback)callback
@@ -41,6 +42,19 @@ WX_EXPORT_METHOD_SYNC(@selector(polygonContainsMarker:ref:callback:))
         callback([(WXMapViewComponent *)component getCenterLocation] ? : nil);
     }];
 }
+
+-(void)includePoints:(NSString *)elemRef points:(NSArray*)points{
+    [self performBlockWithRef:elemRef block:^(WXComponent *component) {
+        [(WXMapViewComponent *)component includePoints:points];
+    }];
+}
+
+-(void)addMarkerMoveAnimation:(NSString *)elemRef points:(NSArray *)points speed:(NSInteger)speed callback:(WXModuleCallback)callback{
+    [self performBlockWithRef:elemRef block:^(WXComponent *component) {
+        [(WXMapViewComponent *)component addPointAnimation:points speed:speed callback:callback];
+    }];
+}
+
 -(void)choosePosition:(WXModuleCallback)callback {
     LocateViewController* locateView = [[LocateViewController alloc] init];
     locateView.modalTransitionStyle = UIModalTransitionStyleCoverVertical;

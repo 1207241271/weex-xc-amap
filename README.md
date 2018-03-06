@@ -269,6 +269,10 @@ export default {
 + positions: [[lng,lat],[lng,lat],…]
 + 将地图缩放至包括所有点大小
 
+##### addPointAnimation(elemRef, positions,speed,callback)
++ positions: [[lng,lat],[lng,lat],…]
++ speed(int):播放速度
+
 #### 使用Amap模块
 
 ``` html 
