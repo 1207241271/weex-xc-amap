@@ -269,9 +269,10 @@ export default {
 + positions: [[lng,lat],[lng,lat],…]
 + 将地图缩放至包括所有点大小
 
-##### addPointAnimation(elemRef, positions,speed,callback)
+##### addMarkerMoveAnimation(elemRef, positions,speed,icon,callback)
 + positions: [[lng,lat],[lng,lat],…]
-+ speed(int):播放速度
++ speed(int):播放速度  (1,2,5)
++ icon:marker图标
 
 #### 使用Amap模块
 
