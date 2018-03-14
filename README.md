@@ -84,6 +84,7 @@ weexpack plugin remove weex-amap
 | setMapCustomEnable  | String | {"android":"/data/custom_map"} |设置自定义地图资源文件的路径
 | indoorswitch  | boolean | false |设置室内地图楼层切换控件是否可见
 | mapStylePath  | String | style.data | 设置地图样式 |
+| carStateChange  | int | {"state": 1} | 回调操作状态：0：初始态（轨迹一次播放完成回归初始态）1：恢复播放成功 2：暂停成功 |
 
 
 **建议你前往[高德开发者社区](http://lbs.amap.com/)申明你对应产品的Key，保证地图正常工作**
@@ -273,6 +274,12 @@ export default {
 + positions: [[lng,lat],[lng,lat],…]
 + speed(int):播放速度  (1,2,5)
 + icon:marker图标
+
+##### pauseMarkerMoveAnimation(elemRef)
++ pause轨迹播放
+
+##### resumeMarkerMoveAnimation(elemRef)
++ pause之后恢复轨迹播放
 
 #### 使用Amap模块
 
