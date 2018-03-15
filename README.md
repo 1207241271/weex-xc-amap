@@ -281,6 +281,15 @@ export default {
 ##### resumeMarkerMoveAnimation(elemRef)
 + pause之后恢复轨迹播放
 
+##### pathOptimize(positions, intensity, callback)
++ positions: [[lng,lat],[lng,lat],…]
++ intensity: 轨迹平滑程度（范围：1-5）
+
+##### adjustTrace(sequenceLineID, gpsList, callback)
++ 可以同时进行多条轨迹的纠偏
++ sequenceLineID: 纠偏的轨迹编号
++ gpsList: gps数据集[{"timestamp": "14458695", "lat": "39.451236", "lon": "116.235687", "speed": "1.8", "course": 435}, ...]
+
 #### 使用Amap模块
 
 ``` html 
